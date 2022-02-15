@@ -11,7 +11,7 @@ function App(): JSX.Element {
                 }}
                 className="App-header"
             >
-                <h1>This is a Header.</h1>
+                <h1>This is a header.</h1>
                 <img
                     src="https://i.imgur.com/mUMMMSv.png"
                     alt="An image I used for an emote on Discord"
@@ -19,7 +19,6 @@ function App(): JSX.Element {
                 UD CISC275 with React Hooks and TypeScript<br></br>
                 Nick Costley<br></br>
                 Hello World<br></br>
-                Test line <br></br>
                 <Button onClick={() => console.log("Hello World!")}>
                     Log Hello World
                 </Button>
