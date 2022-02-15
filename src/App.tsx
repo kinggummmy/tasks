@@ -14,7 +14,7 @@ function App(): JSX.Element {
                 <h1>This is a Header.</h1>
                 <img
                     src="https://i.imgur.com/mUMMMSv.png"
-                    alt="An image I cropped for an emote on Discord"
+                    alt="An image I used for an emote on Discord"
                 />
                 UD CISC275 with React Hooks and TypeScript<br></br>
                 Nick Costley<br></br>
@@ -22,7 +22,7 @@ function App(): JSX.Element {
                 <Button onClick={() => console.log("Hello World!")}>
                     Log Hello World
                 </Button>
-                Three things I like<br></br>
+                Three things I enjoy<br></br>
                 <ul>
                     <li
                         style={{
