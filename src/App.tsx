@@ -5,7 +5,12 @@ import "./App.css";
 function App(): JSX.Element {
     return (
         <div className="App">
-            <header className="App-header">
+            <header
+                style={{
+                    backgroundColor: "darkseagreen"
+                }}
+                className="App-header"
+            >
                 <h1>This is a Header.</h1>
                 <img
                     src="https://i.imgur.com/mUMMMSv.png"
