@@ -5,8 +5,7 @@
  */
 export function fahrenheitToCelius(temperature: number): number {
     const celsius: number = (temperature - 32) * (5 / 9);
-    console.log(celsius);
-    return 0;
+    return celsius;
 }
 
 /**
@@ -14,7 +13,8 @@ export function fahrenheitToCelius(temperature: number): number {
  * if the number is greater than zero.
  */
 export function add3(first: number, second: number, third: number): number {
-    let final: number = 0;
+    let final: number;
+    final = 0; //wouldn't stop giving me a warning when i used one line (let final: number = 0), decided to do this so it's prettier.
     if (first > 0) {
         final = final + first;
     }
@@ -24,7 +24,6 @@ export function add3(first: number, second: number, third: number): number {
     if (third > 0) {
         final = final + third;
     }
-
     return final;
 }
 
@@ -33,7 +32,9 @@ export function add3(first: number, second: number, third: number): number {
  * mark added to the end.
  */
 export function shout(message: string): string {
-    return "";
+    let upper = message.toUpperCase();
+    upper += "!";
+    return upper;
 }
 
 /**
@@ -41,7 +42,9 @@ export function shout(message: string): string {
  * mark. Do not use an `if` statement in solving this question.
  */
 export function isQuestion(message: string): boolean {
-    return true;
+    let finale = 0;
+    finale = message.length;
+    return message.charAt(finale - 1) === "?";
 }
 
 /**
@@ -50,5 +53,11 @@ export function isQuestion(message: string): boolean {
  * upper or lower case), then return `false`. Otherwise, return `null`.
  */
 export function convertYesNo(word: string): boolean | null {
-    return true;
+    if (word === "yes" || word === "YES") {
+        return true;
+    }
+    if (word === "no" || word === "NO") {
+        return false;
+    }
+    return null;
 }
