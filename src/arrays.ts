@@ -1,3 +1,5 @@
+import { parseConfigFileTextToJson } from "typescript";
+
 /**
  * Consume an array of numbers, and return a new array containing
  * JUST the first and last number. If there are no elements, return
@@ -5,7 +7,17 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    const finale: number[] = [];
+    const leng: number = numbers.length;
+    if (leng != 0) {
+        finale.push(numbers[0]);
+        if (leng != 1) {
+            finale.push(numbers[leng - 1]);
+        } else {
+            finale.push(numbers[0]);
+        }
+    }
+    return finale;
 }
 
 /**
@@ -13,7 +25,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const triple = numbers.map((numbers: number): number => numbers * 3);
+    return triple;
 }
 
 /**
@@ -21,7 +34,13 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    let finale: number[] = numbers.map((numbers: string): number =>
+        parseInt(numbers, 10)
+    );
+    finale = finale.map((numbers: number): number =>
+        isNaN(numbers) ? (finale[numbers] = 0) : numbers
+    );
+    return finale;
 }
 
 /**
@@ -32,7 +51,16 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const newArray = amounts.map((price: string): string =>
+        price.charAt(0) === "$" ? (price = price.substring(1)) : price
+    );
+    let finalArray: number[] = newArray.map((numbers: string): number =>
+        parseInt(numbers, 10)
+    );
+    finalArray = finalArray.map((numbers: number): number =>
+        isNaN(numbers) ? (finalArray[numbers] = 0) : numbers
+    );
+    return finalArray;
 };
 
 /**
@@ -49,7 +77,8 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const shorts = words.filter((word: string): boolean => word.length < 4);
+    return shorts.length;
 }
 
 /**
@@ -58,7 +87,14 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    const finale = colors.every(
+        (color: string): boolean =>
+            color === "red" ||
+            color === "blue" ||
+            color === "green" ||
+            colors.length === 0
+    );
+    return finale;
 }
 
 /**
