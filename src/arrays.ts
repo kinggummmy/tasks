@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { parseConfigFileTextToJson } from "typescript";
 
 /**
@@ -116,6 +117,7 @@ export function allRGB(colors: string[]): boolean {
 export function makeMath(addends: number[]): string {
     const sum = addends.reduce((total: number, num: number) => total + num, 0);
     let finale: string;
+    // eslint-disable-next-line no-extra-parens
     sum > 0 ? (finale = addends.join("+")) : (finale = "0");
     const sentence = sum + "=" + finale;
     return sentence;
