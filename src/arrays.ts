@@ -69,7 +69,16 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    let shouts: string[] = [...messages];
+    shouts = shouts.map((message: string): string =>
+        message.charAt(message.length - 1) === "!"
+            ? (message = message.toUpperCase())
+            : message
+    );
+    const finale = shouts.filter(
+        (shout: string): boolean => shout.charAt(shout.length - 1) != "?"
+    );
+    return finale;
 };
 
 /**
@@ -105,7 +114,11 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    const sum = addends.reduce((total: number, num: number) => total + num, 0);
+    let finale: string;
+    sum > 0 ? (finale = addends.join("+")) : (finale = "0");
+    const sentence = sum + "=" + finale;
+    return sentence;
 }
 
 /**
@@ -118,5 +131,20 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const negativeIndex = values.findIndex(
+        (value: number): boolean => value < 0
+    );
+    const finale = [...values];
+    const newList =
+        negativeIndex >= 0
+            ? values.slice(0, negativeIndex)
+            : values.slice(0, values.length);
+    const sum = newList.reduce(
+        (currentTotal: number, num: number) => currentTotal + num,
+        0
+    );
+    negativeIndex >= 0
+        ? finale.splice(negativeIndex + 1, 0, sum)
+        : finale.push(sum);
+    return finale;
 }
