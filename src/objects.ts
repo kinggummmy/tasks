@@ -1,3 +1,6 @@
+/* eslint-disable no-extra-parens */
+/* eslint-disable indent */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { isQuestion } from "./functions";
 import { Question, QuestionType } from "./interfaces/question";
 
@@ -31,11 +34,9 @@ export function makeBlankQuestion(
  * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
-    answer.trim();
-    answer.toLowerCase;
-    question.expected.trim();
-    question.expected.toLowerCase;
-    return answer === question.expected;
+    const done = answer.trim().toLowerCase();
+    const finale = question.expected.trim().toLowerCase();
+    return done === finale;
 }
 
 /**
@@ -49,6 +50,7 @@ export function isValid(question: Question, answer: string): boolean {
     question.type === "short_answer_question"
         ? (finale = true)
         : (finale = question.options.some(
+              // eslint-disable-next-line indent
               (questions: string): boolean => questions === answer
           ));
 
@@ -85,14 +87,8 @@ export function toShortForm(question: Question): string {
  */
 export function toMarkdown(question: Question): string {
     let body: string = "# " + question.name + "\n" + question.body;
-    question.type === "short_answer_question"
-        ? body +
-          "\n- " +
-          question.options[0] +
-          "\n- " +
-          question.options[1] +
-          "\n- " +
-          question.options[2]
+    question.type === "multiple_choice_question"
+        ? (body = body + "\n- " + question.options.join("\n- "))
         : body;
     return body;
 }
@@ -102,8 +98,17 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    question.name = newName;
-    return question;
+    const newQuestion = {
+        id: question.id,
+        body: question.body,
+        type: question.type,
+        options: question.options,
+        expected: question.expected,
+        points: question.points,
+        name: newName,
+        published: question.published
+    };
+    return newQuestion;
 }
 
 /**
@@ -112,10 +117,17 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
-    question.published === false
-        ? (question.published = true)
-        : (question.published = false);
-    return question;
+    const newQuestion = {
+        id: question.id,
+        body: question.body,
+        type: question.type,
+        options: question.options,
+        expected: question.expected,
+        points: question.points,
+        name: question.name,
+        published: !question.published
+    };
+    return newQuestion;
 }
 
 /**
@@ -146,7 +158,17 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  * Check out the subsection about "Nested Fields" for more information.
  */
 export function addOption(question: Question, newOption: string): Question {
-    return question;
+    const newQuestion = {
+        id: question.id,
+        body: question.body,
+        type: question.type,
+        options: [...question.options, newOption],
+        expected: question.expected,
+        points: question.points,
+        name: question.name,
+        published: question.published
+    };
+    return newQuestion;
 }
 
 /**
@@ -163,5 +185,15 @@ export function mergeQuestion(
     contentQuestion: Question,
     { points }: { points: number }
 ): Question {
-    return contentQuestion;
+    const newQuestion = {
+        id: id,
+        body: contentQuestion.body,
+        type: contentQuestion.type,
+        options: contentQuestion.options,
+        expected: contentQuestion.expected,
+        points: points,
+        name: name,
+        published: false
+    };
+    return newQuestion;
 }
