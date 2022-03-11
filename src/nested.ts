@@ -1,6 +1,8 @@
+/* eslint-disable indent */
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
 import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -21,9 +23,9 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
     const finale = questions.filter(
         (question: Question): boolean =>
-            question.body.length === 0 &&
-            question.expected.length === 0 &&
-            question.options.length === 0
+            question.body !== "" ||
+            question.expected !== "" ||
+            question.options.length !== 0
     );
     return finale;
 }
@@ -166,7 +168,7 @@ export function sameType(questions: Question[]): boolean {
     const comparer = questions.filter(
         (question: Question): boolean => question.type === questions[1].type
     );
-    if (comparer === questions) {
+    if (comparer.length === questions.length) {
         return true;
     } else {
         return false;
@@ -199,11 +201,10 @@ export function renameQuestionById(
     targetId: number,
     newName: string
 ): Question[] {
-    const finale = questions;
-    const finaleindex = questions.findIndex(
-        (question: Question): boolean => question.id === targetId
+    const finale = questions.map(
+        (question: Question): Question =>
+            question.id === targetId ? { ...question, name: newName } : question
     );
-    finale[finaleindex].name = newName;
     return finale;
 }
 
@@ -219,7 +220,16 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    return [];
+    const finale = questions.map(
+        (question: Question): Question =>
+            question.id === targetId
+                ? question.type === "multiple_choice_question" &&
+                  question.type != newQuestionType
+                    ? { ...question, type: newQuestionType, options: [] }
+                    : { ...question, type: newQuestionType }
+                : question
+    );
+    return finale;
 }
 
 /**
@@ -238,7 +248,37 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ) {
-    return [];
+    const finale = questions.map(
+        (question: Question): Question => ({
+            ...question,
+            options:
+                question.id === targetId
+                    ? editOptionTwo(
+                          // eslint-disable-next-line prettier/prettier
+                          question.options,
+                          // eslint-disable-next-line indent
+                          targetOptionIndex,
+                          // eslint-disable-next-line indent
+                          newOption
+                      )
+                    : question.options
+        })
+    );
+    return finale;
+}
+
+function editOptionTwo(
+    newquestions: string[],
+    targetOptionIndex: number,
+    newOption: string
+) {
+    const finale = [...newquestions];
+    if (targetOptionIndex === -1) {
+        finale.push(newOption);
+    } else {
+        finale.splice(targetOptionIndex, 1, newOption);
+    }
+    return finale;
 }
 
 /***
@@ -252,5 +292,14 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number
 ): Question[] {
-    return [];
+    const finale = [...questions];
+    const finaleindex = questions.findIndex(
+        (question: Question): boolean => question.id === targetId
+    );
+    finale.splice(
+        finaleindex + 1,
+        0,
+        duplicateQuestion(newId, questions[finaleindex])
+    );
+    return finale;
 }
