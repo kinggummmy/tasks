@@ -186,8 +186,8 @@ export function addNewQuestion(
     name: string,
     type: QuestionType
 ): Question[] {
-    const queste = makeBlankQuestion(id, name, type);
-    const finale = [...questions, queste];
+    const quest = makeBlankQuestion(id, name, type);
+    const finale = [...questions, quest];
     return finale;
 }
 
