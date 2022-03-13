@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { scryRenderedComponentsWithType } from "react-dom/test-utils";
 import { QuestionType } from "../interfaces/question";
 
