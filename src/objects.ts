@@ -34,9 +34,10 @@ export function makeBlankQuestion(
  * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
-    const done = answer.trim().toLowerCase();
-    const finale = question.expected.trim().toLowerCase();
-    return done === finale;
+    return answer.toLowerCase().trim() ===
+        question.expected.toLowerCase().trim()
+        ? true
+        : false;
 }
 
 /**
@@ -98,16 +99,7 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    const newQuestion = {
-        id: question.id,
-        body: question.body,
-        type: question.type,
-        options: question.options,
-        expected: question.expected,
-        points: question.points,
-        name: newName,
-        published: question.published
-    };
+    const newQuestion = { ...question, name: newName };
     return newQuestion;
 }
 
@@ -117,16 +109,7 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
-    const newQuestion = {
-        id: question.id,
-        body: question.body,
-        type: question.type,
-        options: question.options,
-        expected: question.expected,
-        points: question.points,
-        name: question.name,
-        published: !question.published
-    };
+    const newQuestion = { ...question, published: !question.published };
     return newQuestion;
 }
 
@@ -159,14 +142,8 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  */
 export function addOption(question: Question, newOption: string): Question {
     const newQuestion = {
-        id: question.id,
-        body: question.body,
-        type: question.type,
-        options: [...question.options, newOption],
-        expected: question.expected,
-        points: question.points,
-        name: question.name,
-        published: question.published
+        ...question,
+        options: [...question.options, newOption]
     };
     return newQuestion;
 }
@@ -187,12 +164,12 @@ export function mergeQuestion(
 ): Question {
     const newQuestion = {
         id: id,
+        name: name,
         body: contentQuestion.body,
         type: contentQuestion.type,
         options: contentQuestion.options,
         expected: contentQuestion.expected,
         points: points,
-        name: name,
         published: false
     };
     return newQuestion;
